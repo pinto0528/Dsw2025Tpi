@@ -1,5 +1,12 @@
 # Trabajo Práctico Integrador
 ## Desarrollo de Software
+
+## Integrantes del Grupo
+
+* **56605** - Jeremias Mastafa Nazar - jeremias.mastafanazar@alu.frt.utn.edu.ar
+* **53390** - Nicolas Pinto - nclpnt0528@gmail.com
+* **53160** - Maria de la Paz Castro - castromariadelapaz01@gmail.com
+
 ### Backend
 
 ## Introducción
