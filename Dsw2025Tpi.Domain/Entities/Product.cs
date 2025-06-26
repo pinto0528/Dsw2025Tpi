@@ -16,6 +16,5 @@ namespace Dsw2025Tpi.Domain.Entities
         public int StockQuantity { get; set; }
         public bool IsActive { get; set; }
 
-
     }
 }
