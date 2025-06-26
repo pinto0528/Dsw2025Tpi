@@ -1,3 +1,5 @@
+using Dsw2025Tpi.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dsw2025Tpi.Api;
 
@@ -14,6 +16,10 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddHealthChecks();
+
+        // Configurar la cadena de conexión a la base de datos
+        builder.Services.AddDbContext<Dsw2025TpiContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         var app = builder.Build();
 
