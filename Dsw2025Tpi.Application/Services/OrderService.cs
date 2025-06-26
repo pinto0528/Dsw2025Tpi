@@ -7,7 +7,7 @@ using Dsw2025Tpi.Domain.Interfaces;
 
 namespace Dsw2025Tpi.Application.Services
 {
-    public class OrderService
+    public class OrderService : IService
     {
         private readonly IRepository _orderRepository;
         public OrderService(IRepository orderRepository)
