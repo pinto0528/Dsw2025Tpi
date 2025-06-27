@@ -37,13 +37,49 @@ namespace Dsw2025Tpi.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] ProductModel.ProductRequest request)
         {
-            if (request == null)
+
+            try
             {
-                return BadRequest("Product cannot be null");
+                var response = await _productService.Add(request);
+                return Ok(response);
             }
-            var response = await _productService.Add(request);
-            return Ok(response);
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException knte )
+            {
+                return BadRequest(knte.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
 
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] ProductModel.ProductRequest request)
+        {
+            try
+            {
+                var response = await _productService.Update(id, request);
+                return Ok(response);
+            }
+
+
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException knte)
+            {
+                return BadRequest(knte.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

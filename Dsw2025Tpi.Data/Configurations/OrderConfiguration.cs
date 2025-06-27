@@ -30,9 +30,7 @@ namespace Dsw2025Tpi.Data.Configurations
             builder.Property(o => o.Status)
                 .IsRequired();
 
-            builder.Property(o => o.TotalAmount)
-                .IsRequired()
-                .HasColumnType("decimal(18,2)");
+            builder.Ignore(o => o.TotalAmount);
 
             builder.HasMany(o => o.OrderItems)
                 .WithOne()

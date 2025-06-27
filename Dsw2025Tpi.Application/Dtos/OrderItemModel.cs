@@ -23,7 +23,6 @@ namespace Dsw2025Tpi.Application.Dtos
                     Quantity = Quantity,
                     
                 };
-                item.CalculateSubtotal();
                 return item;
             }
         };
