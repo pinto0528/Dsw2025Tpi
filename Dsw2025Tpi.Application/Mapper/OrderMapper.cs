@@ -29,7 +29,8 @@ namespace Dsw2025Tpi.Application.Mapper
                     item.Quantity,
                     item.UnitPrice,
                     item.Subtotal
-                )).ToList()
+                )).ToList(),
+                entity.TotalAmount
             );
         }
     }

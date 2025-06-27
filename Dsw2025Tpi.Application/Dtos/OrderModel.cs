@@ -20,7 +20,7 @@ namespace Dsw2025Tpi.Application.Dtos
         {
             public Order ToEntity()
             {
-                return new Order
+                var order = new Order
                 {
                     CustomerId = CustomerId,
                     ShippingAddress = ShippingAddress,
@@ -29,6 +29,7 @@ namespace Dsw2025Tpi.Application.Dtos
                     OrderItems = OrderItems.Select(item => item.ToEntity()).ToList(),
 
                 };
+                return order;
             }
         };
 
@@ -38,7 +39,8 @@ namespace Dsw2025Tpi.Application.Dtos
             string ShippingAddress,
             string BillingAddress,
             string Notes,
-            List<OrderItemModel.ItemResponse> OrderItems
+            List<OrderItemModel.ItemResponse> OrderItems,
+            decimal TotalAmount
             );
 
     }
