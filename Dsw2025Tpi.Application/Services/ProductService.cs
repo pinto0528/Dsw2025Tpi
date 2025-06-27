@@ -33,6 +33,10 @@ namespace Dsw2025Tpi.Application.Services
             }
 
             // Validacion de campos requeridos
+
+            if ((await _productRepository.First<Product>(p => p.Sku == request.Sku)) != null)
+                throw new InvalidOperationException($"Ya existe un producto con el SKU '{request.Sku}'.");
+
             if (request.CurrentUnitPrice <= 0)
             {
                 throw new ArgumentException("El precio unitario debe ser mayor a cero.");
