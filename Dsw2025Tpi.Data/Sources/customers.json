@@ -1,0 +1,52 @@
+﻿[
+    {
+        "name": "José de San Martín",
+        "email": "sanmartin@example.com",
+        "phoneNumber": "+54 9 11 1234 5678"
+    },
+    {
+        "name": "Manuel Belgrano",
+        "email": "belgrano@example.com",
+        "phoneNumber": "+54 9 11 2345 6789"
+    },
+    {
+        "name": "Juan José Castelli",
+        "email": "castelli@example.com",
+        "phoneNumber": "+54 9 381 456 7890"
+    },
+    {
+        "name": "Mariano Moreno",
+        "email": "moreno@example.com",
+        "phoneNumber": "+54 9 261 987 6543"
+    },
+    {
+        "name": "Cornelio Saavedra",
+        "email": "saavedra@example.com",
+        "phoneNumber": "+54 9 351 678 4321"
+    },
+    {
+        "name": "Domingo F. Sarmiento",
+        "email": "sarmiento@example.com",
+        "phoneNumber": "+54 9 264 543 2109"
+    },
+    {
+        "name": "Juan Manuel de Rosas",
+        "email": "rosas@example.com",
+        "phoneNumber": "+54 9 221 765 4321"
+    },
+    {
+        "name": "Martín Miguel de Güemes",
+        "email": "guemes@example.com",
+        "phoneNumber": "+54 9 387 654 3210"
+    },
+    {
+        "name": "Juan Lavalle",
+        "email": "lavalle@example.com",
+        "phoneNumber": "+54 9 262 890 1234"
+    },
+    {
+        "name": "Justo José de Urquiza",
+        "email": "urquiza@example.com",
+        "phoneNumber": "+54 9 343 567 8901"
+    }
+]
