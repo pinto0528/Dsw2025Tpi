@@ -26,12 +26,12 @@ namespace Dsw2025Tpi.Api.Controllers
             }
             catch(InvalidOperationException ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(ex.Message);
 
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Error inesperado." });
+                return StatusCode(500, ex.Message);
             }
 
         }

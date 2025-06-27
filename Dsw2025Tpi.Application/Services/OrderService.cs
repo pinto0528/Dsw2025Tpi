@@ -32,6 +32,11 @@ namespace Dsw2025Tpi.Application.Services
                 var product = await _orderRepository.GetById<Product>(productId)
                     ?? throw new InvalidOperationException($"El producto con ID {productId} no fue encontrado.");
 
+                if (!product.IsActive)
+                {
+                    throw new InvalidOperationException($"El producto {product.Name} no está activo y no puede ser incluido en la orden.");
+                }
+
                 productDict[productId] = product;
             }
 

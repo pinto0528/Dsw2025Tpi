@@ -98,6 +98,7 @@ namespace Dsw2025Tpi.Api.Controllers
             {
                 return NotFound(knte.Message);
             }
+        }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById ([FromRoute] Guid id)
