@@ -14,5 +14,7 @@ namespace Dsw2025Tpi.Domain.Interfaces
         Task<ProductModel.ProductResponse> Add(ProductModel.ProductRequest request);
         Task<ProductModel.ProductResponse> Update(Guid id, ProductModel.ProductRequest request);
         Task Disable(Guid id);
+        Task<ProductModel.ProductResponse> GetById(Guid id);
+
     }
 }
