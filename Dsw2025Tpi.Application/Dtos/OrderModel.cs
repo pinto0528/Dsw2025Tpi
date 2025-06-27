@@ -10,32 +10,37 @@ namespace Dsw2025Tpi.Application.Dtos
 {
     public record OrderModel
     {
-        public record Request(
+        public record OrderRequest(
             Guid CustomerId,
             string ShippingAddress,
             string BillingAddress,
+            string Notes,
             List<OrderItemModel.ItemRequest> OrderItems
             ) : IRequestMapper<Order>
         {
             public Order ToEntity()
             {
-                return new Order
+                var order = new Order
                 {
                     CustomerId = CustomerId,
                     ShippingAddress = ShippingAddress,
                     BillingAddress = BillingAddress,
+                    Notes = Notes,
                     OrderItems = OrderItems.Select(item => item.ToEntity()).ToList(),
 
                 };
+                return order;
             }
         };
 
-        public record Response(
+        public record OrderResponse(
             Guid Id,
             Guid CustomerId,
             string ShippingAddress,
             string BillingAddress,
-            List<OrderItemModel.ItemResponse> OrderItems
+            string Notes,
+            List<OrderItemModel.ItemResponse> OrderItems,
+            decimal TotalAmount
             );
 
     }

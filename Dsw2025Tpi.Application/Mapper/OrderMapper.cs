@@ -9,26 +9,28 @@ using Dsw2025Tpi.Domain.Entities;
 
 namespace Dsw2025Tpi.Application.Mapper
 {
-    public class OrderMapper : IEntityMapper<Order, OrderModel.Response>
+    public class OrderMapper : IEntityMapper<Order, OrderModel.OrderResponse>
     {
-        public OrderModel.Response ToResponse(Order entity)
+        public OrderModel.OrderResponse ToResponse(Order entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity), "Product entity cannot be null");
             }
-            return new OrderModel.Response(
+            return new OrderModel.OrderResponse(
                 entity.Id,
                 entity.CustomerId,
                 entity.ShippingAddress,
                 entity.BillingAddress,
+                entity.Notes,
                 entity.OrderItems.Select(item => new OrderItemModel.ItemResponse(
                     item.Id,
                     item.ProductId,
                     item.Quantity,
                     item.UnitPrice,
                     item.Subtotal
-                )).ToList()
+                )).ToList(),
+                entity.TotalAmount
             );
         }
     }

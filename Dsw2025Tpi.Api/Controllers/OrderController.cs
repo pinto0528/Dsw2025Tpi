@@ -11,21 +11,25 @@ namespace Dsw2025Tpi.Api.Controllers
     {
         private readonly IOrderService _orderService;
         public OrderController(IOrderService orderService)
+        
         {
             _orderService = orderService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] OrderModel.Request request)
+        public async Task<IActionResult> CreateOrder([FromBody] OrderModel.OrderRequest request)
         {
             try
             {
                 var response = await _orderService.Add(request);
                 return Ok(response);
-            }catch(InvalidOperationException ex)
+            }
+            catch(InvalidOperationException ex)
             {
                 return BadRequest(new { message = ex.Message });
-            }catch (Exception ex)
+
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, new { message = "Error inesperado." });
             }
