@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace Dsw2025Tpi.Data.Configurations
 {
@@ -22,10 +23,8 @@ namespace Dsw2025Tpi.Data.Configurations
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
 
-            builder.Property(oi => oi.Subtotal)
-                .IsRequired()
-                .HasColumnType("decimal(18,2)");
-
+            builder.Ignore(oi => oi.Subtotal);
+            
 
             // Configurar las relaciones
 
