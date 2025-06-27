@@ -19,21 +19,8 @@ namespace Dsw2025Tpi.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] OrderModel.OrderRequest request)
         {
-            try
-            {
-                var response = await _orderService.Add(request);
-                return Ok(response);
-            }
-            catch(InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-
+            var response = await _orderService.Add(request);
+            return Ok(response);  
         }
     }
 }
