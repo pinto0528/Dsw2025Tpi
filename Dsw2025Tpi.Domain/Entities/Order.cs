@@ -19,6 +19,7 @@ namespace Dsw2025Tpi.Domain.Entities
 
         // FK de Customer
         public Guid CustomerId { get; set; }
+        public Customer Customer { get; set; }
 
         // Calculo de TotalAmount
         public void CalculateTotalAmount()
