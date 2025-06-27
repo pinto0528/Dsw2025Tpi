@@ -25,8 +25,8 @@ public class Program
       
         builder.Services.AddScoped<IRepository, EfRepository>();
       
-        builder.Services.AddScoped<IEntityMapper<Product, ProductModel.Response>, ProductMapper>();
-        builder.Services.AddScoped<IEntityMapper<Order, OrderModel.Response>, OrderMapper>();
+        builder.Services.AddScoped<IEntityMapper<Product, ProductModel.ProductResponse>, ProductMapper>();
+        builder.Services.AddScoped<IEntityMapper<Order, OrderModel.OrderResponse>, OrderMapper>();
 
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -35,7 +35,7 @@ namespace Dsw2025Tpi.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody] ProductModel.Request request)
+        public async Task<IActionResult> CreateProduct([FromBody] ProductModel.ProductRequest request)
         {
             if (request == null)
             {

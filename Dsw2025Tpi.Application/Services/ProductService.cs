@@ -12,8 +12,8 @@ namespace Dsw2025Tpi.Application.Services
     public class ProductService : IProductService
     {
         private readonly IRepository _productRepository;
-        private readonly IEntityMapper<Product, ProductModel.Response> _entityMapper;
-        public ProductService(IRepository productRepository, IEntityMapper<Product, ProductModel.Response> entityMapper)
+        private readonly IEntityMapper<Product, ProductModel.ProductResponse> _entityMapper;
+        public ProductService(IRepository productRepository, IEntityMapper<Product, ProductModel.ProductResponse> entityMapper)
         {
             _productRepository = productRepository;
             _entityMapper = entityMapper;
@@ -24,7 +24,7 @@ namespace Dsw2025Tpi.Application.Services
             return await _productRepository.GetAll<T>();
         }
 
-        public async Task<ProductModel.Response> Add(ProductModel.Request request) 
+        public async Task<ProductModel.ProductResponse> Add(ProductModel.ProductRequest request) 
         { 
             var productEntity = request.ToEntity();
             var savedProductEntity = await _productRepository.Add(productEntity); 

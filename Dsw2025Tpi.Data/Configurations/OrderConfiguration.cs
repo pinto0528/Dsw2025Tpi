@@ -24,6 +24,9 @@ namespace Dsw2025Tpi.Data.Configurations
             builder.Property(o => o.BillingAddress).IsRequired()
                 .HasMaxLength(500);
 
+            builder.Property(o => o.Notes)
+                .IsRequired(false);
+
             builder.Property(o => o.Status)
                 .IsRequired();
 

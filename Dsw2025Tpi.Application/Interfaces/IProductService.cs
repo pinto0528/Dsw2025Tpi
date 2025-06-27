@@ -11,6 +11,6 @@ namespace Dsw2025Tpi.Domain.Interfaces
     public interface IProductService
     {
         Task<IEnumerable<T>?> GetAll<T>() where T : EntityBase;
-        Task<ProductModel.Response> Add(ProductModel.Request request);
+        Task<ProductModel.ProductResponse> Add(ProductModel.ProductRequest request);
     }
 }

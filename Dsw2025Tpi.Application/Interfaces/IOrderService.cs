@@ -11,6 +11,6 @@ namespace Dsw2025Tpi.Application.Interfaces
 {
     public interface IOrderService
     {
-        Task<OrderModel.Response> Add(OrderModel.Request request);
+        Task<OrderModel.OrderResponse> Add(OrderModel.OrderRequest request);
     }
 }

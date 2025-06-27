@@ -13,14 +13,14 @@ namespace Dsw2025Tpi.Application.Services
     public class OrderService : IOrderService
     {
         private readonly IRepository _orderRepository;
-        private readonly IEntityMapper<Order, OrderModel.Response> _entityMapper;
-        public OrderService(IRepository orderRepository, IEntityMapper<Order, OrderModel.Response> entityMapper)
+        private readonly IEntityMapper<Order, OrderModel.OrderResponse> _entityMapper;
+        public OrderService(IRepository orderRepository, IEntityMapper<Order, OrderModel.OrderResponse> entityMapper)
         {
             _orderRepository = orderRepository;
             _entityMapper = entityMapper;
         }
 
-        public async Task<OrderModel.Response> Add(OrderModel.Request request)
+        public async Task<OrderModel.OrderResponse> Add(OrderModel.OrderRequest request)
         {
 
             var orderEntity = request.ToEntity();

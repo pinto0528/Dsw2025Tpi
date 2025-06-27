@@ -9,15 +9,15 @@ using Dsw2025Tpi.Domain.Entities;
 
 namespace Dsw2025Tpi.Application.Mapper
 {
-    public class ProductMapper : IEntityMapper<Product, ProductModel.Response>
+    public class ProductMapper : IEntityMapper<Product, ProductModel.ProductResponse>
     {
-        public ProductModel.Response ToResponse(Product entity)
+        public ProductModel.ProductResponse ToResponse(Product entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity), "Product entity cannot be null");
             }
-            return new ProductModel.Response(
+            return new ProductModel.ProductResponse(
                 entity.Id,
                 entity.Name,
                 entity.Sku,
