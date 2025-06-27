@@ -22,6 +22,7 @@ namespace Dsw2025Tpi.Application.Services
 
         public async Task<OrderModel.OrderResponse> Add(OrderModel.OrderRequest request)
         {
+
             // Validar que el cliente exista
             var customer = await _orderRepository.First<Customer>(c => c.Id == request.CustomerId);
             if (customer == null)
