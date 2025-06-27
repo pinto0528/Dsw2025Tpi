@@ -7,6 +7,7 @@ using Dsw2025Tpi.Data.Repositories;
 using Dsw2025Tpi.Domain.Entities;
 using Dsw2025Tpi.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Dsw2025Tpi.Api;
 
@@ -36,7 +37,14 @@ public class Program
 
         // Configurar la cadena de conexión a la base de datos
         builder.Services.AddDbContext<Dsw2025TpiContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        {
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            options.UseSeeding((c, t) =>
+            {
+                ((Dsw2025TpiContext)c).Seedwork<Customer>("Sources\\customers.json");
+            });
+        });
+
 
         var app = builder.Build();
 
