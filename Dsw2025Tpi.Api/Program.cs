@@ -19,17 +19,22 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddControllers();
-        //builder.Services.AddScoped<IProductService, ProductService>(); //Modificado
-        builder.Services.AddScoped<IRepository, EfRepository>();
+
+        builder.Services.AddScoped<IProductService, ProductService>();
         builder.Services.AddScoped<IOrderService, OrderService>();
+      
+        builder.Services.AddScoped<IRepository, EfRepository>();
+      
+        builder.Services.AddScoped<IEntityMapper<Product, ProductModel.Response>, ProductMapper>();
         builder.Services.AddScoped<IEntityMapper<Order, OrderModel.Response>, OrderMapper>();
+
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddHealthChecks();
 
-        // Configurar la cadena de conexión a la base de datos
+        // Configurar la cadena de conexiÃ³n a la base de datos
         builder.Services.AddDbContext<Dsw2025TpiContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dsw2025Tpi.Domain.Interfaces;
 using Dsw2025Tpi.Domain.Entities;
+using Dsw2025Tpi.Application.Dtos;
 
 namespace Dsw2025Tpi.Api.Controllers
 {
@@ -8,8 +9,8 @@ namespace Dsw2025Tpi.Api.Controllers
     [Route("api/products")]
     public class ProductController : ControllerBase
     {
-        private readonly IService _productService;
-        public ProductController(IService productService)
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
             _productService = productService;
         }
@@ -31,6 +32,17 @@ namespace Dsw2025Tpi.Api.Controllers
                 return NoContent();
             }
             return Ok(products);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct([FromBody] ProductModel.Request request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Product cannot be null");
+            }
+            var response = await _productService.Add(request);
+            return Ok(response);
         }
 
     }
