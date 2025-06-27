@@ -12,6 +12,12 @@ namespace Dsw2025Tpi.Domain.Entities
         public decimal UnitPrice { get; set; }
         public decimal Subtotal { get; private set; }
 
+        // Constructor para calcular el subtotal
+        public void CalculateSubtotal()
+        {
+            Subtotal = Quantity * UnitPrice;
+        }
+
         // FK de Order y Product
         public Guid OrderId { get; set; }
         public Guid ProductId { get; set; }
@@ -20,10 +26,5 @@ namespace Dsw2025Tpi.Domain.Entities
         public Order Order { get; set; }
         public Product Product { get; set; }
 
-        // Calculo de Subtotal
-        public void CalculateSubtotal()
-        {
-            Subtotal = (decimal)(Quantity * UnitPrice);
-        }
     }
 }

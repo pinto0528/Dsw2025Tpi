@@ -1,6 +1,10 @@
+using Dsw2025Tpi.Application.Dtos;
+using Dsw2025Tpi.Application.Interfaces;
+using Dsw2025Tpi.Application.Mapper;
 using Dsw2025Tpi.Application.Services;
 using Dsw2025Tpi.Data;
 using Dsw2025Tpi.Data.Repositories;
+using Dsw2025Tpi.Domain.Entities;
 using Dsw2025Tpi.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +19,10 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddControllers();
-        builder.Services.AddScoped<IService, ProductService>();
+        //builder.Services.AddScoped<IProductService, ProductService>(); //Modificado
         builder.Services.AddScoped<IRepository, EfRepository>();
+        builder.Services.AddScoped<IOrderService, OrderService>();
+        builder.Services.AddScoped<IEntityMapper<Order, OrderModel.Response>, OrderMapper>();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
