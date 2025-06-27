@@ -50,7 +50,7 @@ namespace Dsw2025Tpi.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (KeyNotFoundException knte )
+            catch (KeyNotFoundException knte)
             {
                 return BadRequest(knte.Message);
             }
@@ -85,6 +85,20 @@ namespace Dsw2025Tpi.Api.Controllers
             }
         }
 
+        [HttpPatch("{id:guid}")]
+
+        public async Task<IActionResult> Disable([FromRoute] Guid id)
+        {
+            try
+            {
+                await _productService.Disable(id);
+                return NoContent();
+            }
+            catch (KeyNotFoundException knte)
+            {
+                return NotFound(knte.Message);
+            }
+
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById ([FromRoute] Guid id)
         {
@@ -97,6 +111,7 @@ namespace Dsw2025Tpi.Api.Controllers
             {
                 return NotFound();
             }
+
 
             catch (Exception ex)
             {

@@ -83,12 +83,25 @@ namespace Dsw2025Tpi.Application.Services
 
             return _entityMapper.ToResponse(savedProduct);
         }
+        
+        public async Task Disable(Guid id)
+        {
+            var product = await _productRepository.GetById<Product>(id);
+            if (product == null)
+            {
+                throw new KeyNotFoundException($"El producto de ID {id} no fue encontrado.");
+            }
+
+            product.Disable();
+            await _productRepository.Update(product);
+        }
 
         public async Task<ProductModel.ProductResponse> GetById(Guid id)
         {
             var product = await _productRepository.GetById<Product>(id) ??
                 throw new KeyNotFoundException($"El producto de ID {id} no fue encontrado.");
             return _entityMapper.ToResponse(product);
+
         }
     }
 }
