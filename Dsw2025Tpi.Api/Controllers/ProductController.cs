@@ -2,6 +2,7 @@
 using Dsw2025Tpi.Domain.Interfaces;
 using Dsw2025Tpi.Domain.Entities;
 using Dsw2025Tpi.Application.Dtos;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Dsw2025Tpi.Api.Controllers
 {
@@ -25,13 +26,15 @@ namespace Dsw2025Tpi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var products = await _productService.GetAll<Product>();
-
-            if (products == null || !products.Any())
+            try
             {
-                return NoContent();
+                var products = await _productService.GetAll<Product>();
+                return products.Any() ? Ok(products) : NoContent();
             }
-            return Ok(products);
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
 
         [HttpPost]
@@ -76,6 +79,25 @@ namespace Dsw2025Tpi.Api.Controllers
             {
                 return BadRequest(knte.Message);
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById ([FromRoute] Guid id)
+        {
+            try
+            {
+                var response = await _productService.GetById(id);
+                return Ok(response);
+            }
+            catch (KeyNotFoundException knte)
+            {
+                return NotFound();
+            }
+
             catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error: " + ex.Message);

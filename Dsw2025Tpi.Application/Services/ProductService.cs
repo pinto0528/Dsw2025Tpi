@@ -21,7 +21,8 @@ namespace Dsw2025Tpi.Application.Services
 
         public async Task<IEnumerable<T>?> GetAll<T>() where T : EntityBase
         {
-            return await _productRepository.GetAll<T>();
+            var products = await _productRepository.GetAll<T>() ?? Enumerable.Empty<T>();
+            return products;
         }
 
         public async Task<ProductModel.ProductResponse> Add(ProductModel.ProductRequest request) 
@@ -81,6 +82,13 @@ namespace Dsw2025Tpi.Application.Services
             var savedProduct = await _productRepository.Update(existingProduct);
 
             return _entityMapper.ToResponse(savedProduct);
+        }
+
+        public async Task<ProductModel.ProductResponse> GetById(Guid id)
+        {
+            var product = await _productRepository.GetById<Product>(id) ??
+                throw new KeyNotFoundException($"El producto de ID {id} no fue encontrado.");
+            return _entityMapper.ToResponse(product);
         }
     }
 }
