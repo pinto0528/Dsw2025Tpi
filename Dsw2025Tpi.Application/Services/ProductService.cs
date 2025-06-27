@@ -30,5 +30,25 @@ namespace Dsw2025Tpi.Application.Services
             var savedProductEntity = await _productRepository.Add(productEntity); 
             return _entityMapper.ToResponse(savedProductEntity);
         }
+
+        public async Task<ProductModel.ProductResponse> Update(Guid id, ProductModel.ProductRequest request)
+        {
+            // Validacion de existencia del producto
+            var existingProduct = await _productRepository.GetById<Product>(id) ??
+                throw new KeyNotFoundException($"El producto de ID {id} no fue encontrado.");
+
+            // Actualizacion de campos
+            existingProduct.Sku = request.Sku;
+            existingProduct.InternalCode = request.InternalCode;
+            existingProduct.Name = request.Name;
+            existingProduct.Description = request.Description;
+            existingProduct.CurrentUnitPrice = request.CurrentUnitPrice;
+            existingProduct.StockQuantity = request.StockQuantity;
+
+            // Actualizacion de DB
+            var savedProduct = await _productRepository.Update(existingProduct);
+
+            return _entityMapper.ToResponse(savedProduct);
+        }
     }
 }

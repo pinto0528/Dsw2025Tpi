@@ -45,5 +45,19 @@ namespace Dsw2025Tpi.Api.Controllers
             return Ok(response);
         }
 
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] ProductModel.ProductRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Product cannot be null");
+            }
+            var response = await _productService.Update(id,request);
+            return Ok(response);
+
+        }
+
+
     }
 }
