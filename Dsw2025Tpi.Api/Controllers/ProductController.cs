@@ -47,7 +47,7 @@ namespace Dsw2025Tpi.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (KeyNotFoundException knte )
+            catch (KeyNotFoundException knte)
             {
                 return BadRequest(knte.Message);
             }
@@ -80,6 +80,26 @@ namespace Dsw2025Tpi.Api.Controllers
             {
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
+        }
+
+        [HttpPatch("{id:guid}")]
+
+        public async Task<IActionResult> Disable([FromRoute] Guid id)
+        {
+            try
+            {
+                await _productService.Disable(id);
+                return NoContent();
+            }
+            catch (KeyNotFoundException knte)
+            {
+                return NotFound(knte.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+
         }
     }
 }

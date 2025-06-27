@@ -15,6 +15,9 @@ namespace Dsw2025Tpi.Domain.Entities
         public decimal CurrentUnitPrice { get; set; }
         public int StockQuantity { get; set; }
         public bool IsActive { get; set; }
-
+        public void Disable()
+        {
+            IsActive = false;
+        }
     }
 }
