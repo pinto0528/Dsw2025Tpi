@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dsw2025Tpi.Domain.Interfaces;
+using Dsw2025Tpi.Domain.Entities;
 
 namespace Dsw2025Tpi.Api.Controllers
 {
@@ -14,12 +15,20 @@ namespace Dsw2025Tpi.Api.Controllers
         }
 
         [HttpGet]
+        [Route("test")]
+        public IActionResult Test()
+        {
+            return Ok("API is working!");
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var products = await _productService.GetAll();
+            var products = await _productService.GetAll<Product>();
+
             if (products == null || !products.Any())
             {
-                return NotFound("No products found.");
+                return NoContent();
             }
             return Ok(products);
         }
