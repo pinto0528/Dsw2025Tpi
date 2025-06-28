@@ -83,5 +83,20 @@ namespace Dsw2025Tpi.Application.Services
             return _entityMapper.ToResponse(savedOrderEntity);
         }
 
+
+        public async Task<OrderModel.OrderResponse> GetById(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("El ID de la orden no puede ser un GUID vacío.", nameof(id));
+            }
+            var order = await _orderRepository.GetById<Order>(id);
+            if (order == null)
+            {
+                throw new NotFoundException($"La orden con ID {id} no fue encontrada.");
+            }
+            return _entityMapper.ToResponse(order);
+
+        }
     }
 }

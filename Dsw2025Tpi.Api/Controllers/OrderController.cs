@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dsw2025Tpi.Application.Dtos;
 using Dsw2025Tpi.Application.Interfaces;
+using Dsw2025Tpi.Domain.Entities;
 
 
 namespace Dsw2025Tpi.Api.Controllers
@@ -20,7 +21,19 @@ namespace Dsw2025Tpi.Api.Controllers
         public async Task<IActionResult> CreateOrder([FromBody] OrderModel.OrderRequest request)
         {
             var response = await _orderService.Add(request);
-            return Ok("Orden creada exitosamente.\n" + response);  
+            return CreatedAtAction(
+                 nameof(GetById),
+                 new { id = response.Id },
+                 response
+             );
         }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var response = await _orderService.GetById(id);
+            return Ok(response);
+        }
+
     }
 }

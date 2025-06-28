@@ -91,7 +91,7 @@ namespace Dsw2025Tpi.Application.Services
         
         public async Task Disable(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(id), "El ID no puede ser nulo.");
             }
