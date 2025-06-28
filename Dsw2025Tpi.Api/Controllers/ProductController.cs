@@ -17,107 +17,46 @@ namespace Dsw2025Tpi.Api.Controllers
         }
 
         [HttpGet]
-        [Route("test")]
-        public IActionResult Test()
-        {
-            return Ok("API is working!");
-        }
-
-        [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            try
-            {
-                var products = await _productService.GetAll<Product>();
-                return products.Any() ? Ok(products) : NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error: " + ex.Message);
-            }
+            var products = await _productService.GetAll<Product>();
+            return products.Any() ? Ok(products) : NoContent();
+           
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] ProductModel.ProductRequest request)
         {
 
-            try
-            {
-                var response = await _productService.Add(request);
-                return Ok(response);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (KeyNotFoundException knte)
-            {
-                return BadRequest(knte.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error: " + ex.Message);
-            }
+            var response = await _productService.Add(request);
+            return CreatedAtAction(
+                nameof(GetById), 
+                new { id = response.Id },
+                response
+            );
         }
 
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] ProductModel.ProductRequest request)
         {
-            try
-            {
-                var response = await _productService.Update(id, request);
-                return Ok(response);
-            }
-
-
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (KeyNotFoundException knte)
-            {
-                return BadRequest(knte.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error: " + ex.Message);
-            }
+            var response = await _productService.Update(id, request);
+            return Ok(response);
         }
 
         [HttpPatch("{id:guid}")]
 
         public async Task<IActionResult> Disable([FromRoute] Guid id)
         {
-            try
-            {
-                await _productService.Disable(id);
-                return NoContent();
-            }
-            catch (KeyNotFoundException knte)
-            {
-                return NotFound(knte.Message);
-            }
+            await _productService.Disable(id);
+            return NoContent();
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById ([FromRoute] Guid id)
         {
-            try
-            {
-                var response = await _productService.GetById(id);
-                return Ok(response);
-            }
-            catch (KeyNotFoundException knte)
-            {
-                return NotFound();
-            }
-
-
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error: " + ex.Message);
-            }
+            var response = await _productService.GetById(id);
+            return Ok(response);            
         }
     }
 }

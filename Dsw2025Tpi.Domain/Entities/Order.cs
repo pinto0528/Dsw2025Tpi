@@ -16,8 +16,6 @@ namespace Dsw2025Tpi.Domain.Entities
         public OrderStatus Status { get; set; }
         public decimal TotalAmount { get; private set; }
         public List<OrderItem> OrderItems { get; set; }
-
-        // FK de Customer
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
 

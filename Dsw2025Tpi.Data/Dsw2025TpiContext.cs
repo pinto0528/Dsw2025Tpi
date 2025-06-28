@@ -23,6 +23,7 @@ public class Dsw2025TpiContext : DbContext
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
         modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
+        modelBuilder.ApplyConfiguration(new CustomerConfiguration());
     }
 
     public void Seedwork<T>(string filePath) where T : class
