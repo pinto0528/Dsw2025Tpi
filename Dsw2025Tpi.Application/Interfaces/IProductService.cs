@@ -10,7 +10,7 @@ namespace Dsw2025Tpi.Domain.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<T>?> GetAll<T>() where T : EntityBase;
+        Task<IEnumerable<Product>> GetAllEnabled();
         Task<ProductModel.ProductResponse> Add(ProductModel.ProductRequest request);
         Task<ProductModel.ProductResponse> Update(Guid id, ProductModel.ProductRequest request);
         Task Disable(Guid id);

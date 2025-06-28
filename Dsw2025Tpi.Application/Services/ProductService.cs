@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Dsw2025Tpi.Domain.Interfaces;
 using Dsw2025Tpi.Domain.Entities;
 using Dsw2025Tpi.Application.Dtos;
+using System.Collections;
 using Dsw2025Tpi.Application.Exceptions;
 
 namespace Dsw2025Tpi.Application.Services
@@ -20,10 +21,11 @@ namespace Dsw2025Tpi.Application.Services
             _entityMapper = entityMapper;
         }
 
-        public async Task<IEnumerable<T>?> GetAll<T>() where T : EntityBase
+        public async Task<IEnumerable<Product>> GetAllEnabled()
         {
-            var products = await _productRepository.GetAll<T>() ?? Enumerable.Empty<T>();
-            return products;
+            var activeProducts = await _productRepository.GetFiltered<Product>(p => p.IsActive == true)
+                ?? throw new Exception("No hay productos activos.");
+            return activeProducts;
         }
 
         public async Task<ProductModel.ProductResponse> Add(ProductModel.ProductRequest request) 

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Dsw2025Tpi.Domain.Interfaces;
 using Dsw2025Tpi.Domain.Entities;
 using Dsw2025Tpi.Application.Dtos;
@@ -19,7 +19,8 @@ namespace Dsw2025Tpi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var products = await _productService.GetAll<Product>();
+
+            var products = await _productService.GetAllEnabled();
             return products.Any() ? Ok(products) : NoContent();
            
         }
