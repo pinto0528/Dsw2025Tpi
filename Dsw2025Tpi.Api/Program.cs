@@ -46,7 +46,7 @@ public class Program
         // Configurar la cadena de conexión a la base de datos
         builder.Services.AddDbContext<Dsw2025TpiContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            options.UseSqlServer(connectionString);
             options.UseSeeding((c, t) =>
             {
                 ((Dsw2025TpiContext)c).Seedwork<Customer>("Sources\\customers.json");
