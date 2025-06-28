@@ -7,6 +7,7 @@ using Dsw2025Tpi.Domain.Interfaces;
 using Dsw2025Tpi.Domain.Entities;
 using Dsw2025Tpi.Application.Dtos;
 using Dsw2025Tpi.Application.Interfaces;
+using Dsw2025Tpi.Application.Exceptions;
 
 namespace Dsw2025Tpi.Application.Services
 {
@@ -22,11 +23,15 @@ namespace Dsw2025Tpi.Application.Services
 
         public async Task<OrderModel.OrderResponse> Add(OrderModel.OrderRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request), "El request no puede ser nulo.");
+            }
 
             // Validar que el cliente exista
             var customer = await _orderRepository.First<Customer>(c => c.Id == request.CustomerId);
             if (customer == null)
-                throw new InvalidOperationException($"El cliente con ID {request.CustomerId} no fue encontrado.");
+                throw new NotFoundException($"El cliente con ID {request.CustomerId} no fue encontrado.");
 
             // Crear diccionario para guardar productos
             var productIds = request.OrderItems.Select(i => i.ProductId).Distinct().ToList();
@@ -36,11 +41,11 @@ namespace Dsw2025Tpi.Application.Services
             foreach (var productId in productIds)
             {
                 var product = await _orderRepository.GetById<Product>(productId)
-                    ?? throw new InvalidOperationException($"El producto con ID {productId} no fue encontrado.");
+                    ?? throw new NotFoundException($"El producto con ID {productId} no fue encontrado.");
 
                 if (!product.IsActive)
                 {
-                    throw new InvalidOperationException($"El producto {product.Name} no está activo y no puede ser incluido en la orden.");
+                    throw new InvalidEntityStateException($"El producto {product.Name} no está activo y no puede ser incluido en la orden.");
                 }
 
                 productDict[productId] = product;
@@ -52,10 +57,10 @@ namespace Dsw2025Tpi.Application.Services
                 var product = productDict[item.ProductId];
 
                 if (item.Quantity <= 0)
-                    throw new InvalidOperationException($"La cantidad del producto {product.Name} debe ser mayor a cero.");
+                    throw new ValidationException($"La cantidad del producto {product.Name} debe ser mayor a cero.");
 
                 if (item.Quantity > product.StockQuantity)
-                    throw new InvalidOperationException(
+                    throw new ValidationException(
                         $"Stock insuficiente para el producto {product.Name}. " +
                         $"Requerido: {item.Quantity}, Disponible: {product.StockQuantity}");
             }

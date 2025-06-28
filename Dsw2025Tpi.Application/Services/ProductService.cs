@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Dsw2025Tpi.Domain.Interfaces;
 using Dsw2025Tpi.Domain.Entities;
 using Dsw2025Tpi.Application.Dtos;
+using Dsw2025Tpi.Application.Exceptions;
 
 namespace Dsw2025Tpi.Application.Services
 {
@@ -35,16 +36,16 @@ namespace Dsw2025Tpi.Application.Services
             // Validacion de campos requeridos
 
             if ((await _productRepository.First<Product>(p => p.Sku == request.Sku)) != null)
-                throw new InvalidOperationException($"Ya existe un producto con el SKU '{request.Sku}'.");
+                throw new EntityAlreadyExistsException($"Ya existe un producto con el SKU '{request.Sku}'.");
 
             if (request.CurrentUnitPrice <= 0)
             {
-                throw new ArgumentException("El precio unitario debe ser mayor a cero.");
+                throw new ValidationException("El precio unitario debe ser mayor a cero.");
             }
 
             if(request.StockQuantity < 0)
             {
-                throw new ArgumentException("La cantidad de stock no puede ser negativa.");
+                throw new ValidationException("La cantidad de stock no puede ser negativa.");
             }
 
             var productEntity = request.ToEntity();
@@ -61,17 +62,17 @@ namespace Dsw2025Tpi.Application.Services
 
             // Validacion de existencia del producto
             var existingProduct = await _productRepository.GetById<Product>(id) ??
-                throw new KeyNotFoundException($"El producto de ID {id} no fue encontrado.");
+                throw new NotFoundException($"El producto de ID {id} no fue encontrado.");
 
             // Validacion de campos requeridos
             if (request.CurrentUnitPrice <= 0)
             {
-                throw new ArgumentException("No se puede actualizar. El precio unitario debe ser mayor a cero.");
+                throw new ValidationException("No se puede actualizar. El precio unitario debe ser mayor a cero.");
             }
 
             if (request.StockQuantity < 0)
             {
-                throw new ArgumentException("No se puede actualizar. La cantidad de stock no puede ser negativa.");
+                throw new ValidationException("No se puede actualizar. La cantidad de stock no puede ser negativa.");
             }
 
             // Actualizacion de campos
@@ -90,10 +91,14 @@ namespace Dsw2025Tpi.Application.Services
         
         public async Task Disable(Guid id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id), "El ID no puede ser nulo.");
+            }
             var product = await _productRepository.GetById<Product>(id);
             if (product == null)
             {
-                throw new KeyNotFoundException($"El producto de ID {id} no fue encontrado.");
+                throw new NotFoundException($"El producto de ID {id} no fue encontrado.");
             }
 
             product.Disable();
@@ -103,7 +108,7 @@ namespace Dsw2025Tpi.Application.Services
         public async Task<ProductModel.ProductResponse> GetById(Guid id)
         {
             var product = await _productRepository.GetById<Product>(id) ??
-                throw new KeyNotFoundException($"El producto de ID {id} no fue encontrado.");
+                throw new NotFoundException($"El producto de ID {id} no fue encontrado.");
             return _entityMapper.ToResponse(product);
 
         }

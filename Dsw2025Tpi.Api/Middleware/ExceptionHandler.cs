@@ -1,5 +1,6 @@
 ﻿namespace Dsw2025Tpi.Api.Middleware
 {
+    using Dsw2025Tpi.Application.Exceptions;
     using Microsoft.AspNetCore.Http;
     using System;
     using System.Net;
@@ -19,7 +20,7 @@
         {
             try
             {
-                await _next(context); // continúa la ejecución normal
+                await _next(context);
             }
             catch (Exception ex)
             {
@@ -29,11 +30,17 @@
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var code = HttpStatusCode.InternalServerError;
 
-            
-            if (exception is InvalidOperationException)
-                code = HttpStatusCode.BadRequest;
+            var code = exception switch
+            {
+                NotFoundException => HttpStatusCode.NotFound,
+                ValidationException => HttpStatusCode.BadRequest,
+                InvalidEntityStateException => HttpStatusCode.BadRequest,
+                EntityAlreadyExistsException => HttpStatusCode.Conflict,
+                ArgumentNullException => HttpStatusCode.BadRequest,
+                _ => HttpStatusCode.InternalServerError
+            };
+
 
             var result = JsonSerializer.Serialize(new
             {

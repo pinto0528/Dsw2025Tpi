@@ -44,7 +44,6 @@ namespace Dsw2025Tpi.Api.Controllers
 
         public async Task<IActionResult> Disable([FromRoute] Guid id)
         {
-
             await _productService.Disable(id);
             return NoContent();
         }
@@ -52,10 +51,8 @@ namespace Dsw2025Tpi.Api.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById ([FromRoute] Guid id)
         {
-            
             var response = await _productService.GetById(id);
-            return Ok(response);
-            
+            return Ok(response);            
         }
     }
 }
