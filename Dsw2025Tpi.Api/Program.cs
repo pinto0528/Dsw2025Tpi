@@ -38,6 +38,11 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddHealthChecks();
 
+        var dbServer = builder.Configuration["ConnectionSettings:Server"];
+        var dbName = builder.Configuration["ConnectionSettings:Database"];
+
+        var connectionString = $"Server={dbServer};Database={dbName};Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+
         // Configurar la cadena de conexión a la base de datos
         builder.Services.AddDbContext<Dsw2025TpiContext>(options =>
         {
