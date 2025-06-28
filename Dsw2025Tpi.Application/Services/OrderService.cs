@@ -22,11 +22,16 @@ namespace Dsw2025Tpi.Application.Services
 
         public async Task<OrderModel.OrderResponse> Add(OrderModel.OrderRequest request)
         {
-            //Crear diccionario para guardar productos
+            // Validar que el cliente exista
+            var customer = await _orderRepository.First<Customer>(c => c.Id == request.CustomerId);
+            if (customer == null)
+                throw new InvalidOperationException($"El cliente con ID {request.CustomerId} no fue encontrado.");
+
+            // Crear diccionario para guardar productos
             var productIds = request.OrderItems.Select(i => i.ProductId).Distinct().ToList();
             var productDict = new Dictionary<Guid, Product>();
 
-            //Cargar diccionario
+            // Cargar diccionario
             foreach (var productId in productIds)
             {
                 var product = await _orderRepository.GetById<Product>(productId)
@@ -35,26 +40,21 @@ namespace Dsw2025Tpi.Application.Services
                 productDict[productId] = product;
             }
 
-            //Validar stock
+            // Validar stock
             foreach (var item in request.OrderItems)
             {
                 var product = productDict[item.ProductId];
 
                 if (item.Quantity <= 0)
-                {
                     throw new InvalidOperationException($"La cantidad del producto {product.Name} debe ser mayor a cero.");
-                }
 
                 if (item.Quantity > product.StockQuantity)
-                {
                     throw new InvalidOperationException(
                         $"Stock insuficiente para el producto {product.Name}. " +
-                        $"Requerido: {item.Quantity}, Disponible: {product.StockQuantity}"
-                    );
-                }
+                        $"Requerido: {item.Quantity}, Disponible: {product.StockQuantity}");
             }
 
-            //Procesar la orden
+            // Procesar la orden
             var orderEntity = request.ToEntity();
 
             foreach (var item in orderEntity.OrderItems)
@@ -71,5 +71,6 @@ namespace Dsw2025Tpi.Application.Services
             var savedOrderEntity = await _orderRepository.Add(orderEntity);
             return _entityMapper.ToResponse(savedOrderEntity);
         }
+
     }
 }
