@@ -20,7 +20,7 @@ namespace Dsw2025Tpi.Api.Controllers
         public async Task<IActionResult> CreateOrder([FromBody] OrderModel.OrderRequest request)
         {
             var response = await _orderService.Add(request);
-            return Ok(response);  
+            return Ok("Orden creada exitosamente.\n" + response);  
         }
     }
 }

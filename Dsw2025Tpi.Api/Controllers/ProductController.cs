@@ -20,7 +20,7 @@ namespace Dsw2025Tpi.Api.Controllers
         public async Task<IActionResult> GetAllProducts()
         {
             var products = await _productService.GetAll<Product>();
-            return products.Any() ? Ok(products) : NoContent();
+            return products.Any() ? Ok("Productos cargados de la base de datos.\n" + products) : NoContent();
            
         }
 
@@ -29,7 +29,7 @@ namespace Dsw2025Tpi.Api.Controllers
         {
 
             var response = await _productService.Add(request);
-            return Ok(response);
+            return Ok("Producto creado exitosamente.\n" + response);
         }
 
 
@@ -37,7 +37,7 @@ namespace Dsw2025Tpi.Api.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] ProductModel.ProductRequest request)
         {
             var response = await _productService.Update(id, request);
-            return Ok(response);
+            return Ok("Producto creado exitosamente.\n" + response);
         }
 
         [HttpPatch("{id:guid}")]
@@ -52,7 +52,7 @@ namespace Dsw2025Tpi.Api.Controllers
         public async Task<IActionResult> GetById ([FromRoute] Guid id)
         {
             var response = await _productService.GetById(id);
-            return Ok(response);            
+            return Ok("Producto obtenido.\n" + response);            
         }
     }
 }
