@@ -40,9 +40,7 @@ namespace Dsw2025Tpi.Data.Configurations
             builder.HasOne(o => o.Customer)
                 .WithMany(c => c.Orders)
                 .HasForeignKey(o => o.CustomerId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Property(o => o.CustomerId).IsRequired();
+                .OnDelete(DeleteBehavior.Restrict);
 
 
         }

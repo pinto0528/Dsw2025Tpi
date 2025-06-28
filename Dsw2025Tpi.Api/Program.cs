@@ -1,3 +1,4 @@
+using Dsw2025Tpi.Api.Middleware;
 using Dsw2025Tpi.Application.Dtos;
 using Dsw2025Tpi.Application.Interfaces;
 using Dsw2025Tpi.Application.Mapper;
@@ -16,6 +17,8 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        
 
         // Add services to the container.
 
@@ -47,6 +50,8 @@ public class Program
 
 
         var app = builder.Build();
+
+        app.UseMiddleware<ExceptionHandler>();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
