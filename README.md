@@ -36,3 +36,49 @@ Del relevamiento preliminar se identificaron los siguientes requisitos:
 
 - Lenguaje: C# 12.0
 - Plataforma: .NET 8
+
+# 
+
+# Configuración de la base de datos
+
+### Modificar `appsettings.json`
+
+Dentro del archivo `Dsw2025Tpi.Api/appsettings.json`, actualizar la sección `ConnectionSettings` con los datos de tu entorno local:
+
+```json
+  "ConnectionSettings": {
+    "Server": "(localdb)\\nombre-del-server",
+    "Database": "nombre-de-la-db"
+    }
+```
+
+### Migraciones y base de datos
+Si usás Entity Framework, podés aplicar migraciones con:
+```bash 
+dotnet ef database update
+```
+Además, el proyecto soporta carga automática (seeding) desde archivos JSON.
+
+Asegurate de tener el archivo customers.json en la carpeta Sources/.
+
+### Cómo ejecutar el proyecto
+
+Desde la terminal o consola de Visual Studio, ejecutá:
+```bash
+dotnet run --project Dsw2025Tpi.Api
+```
+
+Por defecto, la API estará disponible en:
+- https://localhost:5001
+- http://localhost:5000
+
+#### Endpoints principales
+| Método | Ruta                    | Descripción                    |
+|--------|--------------------------|--------------------------------|
+| GET    | /api/products            | Listado de productos           |
+| POST   | /api/products            | Crear nuevo producto           |
+| PUT    | /api/products/{id}       | Actualizar producto existente  |
+| PATCH  | /api/products/{id}       | Deshabilitar producto          |
+| GET    | /api/products/{id}       | Obtener producto por ID        |
+| POST   | /api/orders              | Crear nueva orden              |
+
