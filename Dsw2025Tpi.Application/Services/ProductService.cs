@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Dsw2025Tpi.Domain.Interfaces;
 using Dsw2025Tpi.Domain.Entities;
 using Dsw2025Tpi.Application.Dtos;
+using System.Collections;
 
 namespace Dsw2025Tpi.Application.Services
 {
@@ -19,9 +20,11 @@ namespace Dsw2025Tpi.Application.Services
             _entityMapper = entityMapper;
         }
 
-        public async Task<IEnumerable<T>?> GetAll<T>() where T : EntityBase
+        public async Task<IEnumerable<Product>> GetAllEnabled()
         {
-            return await _productRepository.GetAll<T>();
+            var activeProducts = await _productRepository.GetFiltered<Product>(p => p.IsActive == true)
+                ?? throw new Exception("No hay productos activos.");
+            return activeProducts;
         }
 
         public async Task<ProductModel.ProductResponse> Add(ProductModel.ProductRequest request) 
